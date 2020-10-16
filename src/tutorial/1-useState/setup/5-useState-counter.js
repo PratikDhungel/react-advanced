@@ -11,6 +11,14 @@ const UseStateCounter = () => {
   const increaseValue = () => {
     setValue(value + 1);
   };
+  const increaseValueWithTimeout = () => {
+    setTimeout(() => {
+      // setValue(value + 1);
+      setValue((prevValue) => {
+        return prevValue + 1;
+      });
+    }, 2000);
+  };
 
   return (
     <>
@@ -24,6 +32,13 @@ const UseStateCounter = () => {
           Reset
         </button>
         <button className='btn' onClick={increaseValue}>
+          Increase
+        </button>
+      </section>
+      <section>
+        <h1>Complex Increase with setTimeout</h1>
+        <h1>{value}</h1>
+        <button className='btn' onClick={increaseValueWithTimeout}>
           Increase
         </button>
       </section>
