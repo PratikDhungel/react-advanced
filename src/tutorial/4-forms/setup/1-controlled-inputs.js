@@ -12,6 +12,7 @@ const ControlledInputs = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (firstName && email) {
+      // Creating a unique id for the user
       const person = { id: new Date().getTime().toString(), firstName, email };
       // Get previous value of people
       // Use spread operator to get current values
