@@ -1,24 +1,8 @@
 import React, { useState, useReducer } from 'react';
 import Modal from './Modal';
+import { reducer } from './reducer';
 import { data } from '../../../data';
 // reducer function
-
-const reducer = (state, action) => {
-  // reducer always needs to return a state value
-  // because we have set a default value and used it
-  // not returning anything after a dispatch will break the code
-
-  if (action.type === 'ADD_ITEM') {
-    const newPeople = [...state.people, action.payload];
-    return { state, people: newPeople, isModalOpen: true, modalContent: 'Item Added' };
-  } else if (action.type === 'NO_VALUE') {
-    return { ...state, isModalOpen: true, modalContent: 'Please enter a value' };
-  } else if (action.type === 'CLOSE_MODAL') {
-    return { ...state, isModalOpen: false };
-  }
-
-  throw new Error('Matching Action Type not found');
-};
 
 const defaultState = {
   people: [],
@@ -62,8 +46,15 @@ const Index = () => {
       </form>
       {state.people.map((person) => {
         return (
-          <div key={person.id}>
+          <div key={person.id} className='item'>
             <h4>{person.name}</h4>
+            <button
+              onClick={() => {
+                dispatch({ type: 'REMOVE_ITEM', payload: person.id });
+              }}
+            >
+              Remove
+            </button>
           </div>
         );
       })}
