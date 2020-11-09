@@ -3,7 +3,21 @@ import Modal from './Modal';
 import { data } from '../../../data';
 // reducer function
 
-const reducer = (state, action) => {};
+const reducer = (state, action) => {
+  // reducer always needs to return a state value
+  // because we have set a default value and used it
+  // not returning anything after a dispatch will break the code
+
+  if (action.type === 'ADD_ITEM') {
+    const newPeople = [...state.people, action.payload];
+    return { state, people: newPeople, isModalOpen: true, modalContent: 'Item Added' };
+  } else if (action.type === 'NO_VALUE') {
+    return { ...state, isModalOpen: true, modalContent: 'Please enter a value' };
+  }
+
+  throw new Error('Matching Action Type not found');
+};
+
 const defaultState = {
   people: [],
   isModalOpen: false,
@@ -19,10 +33,14 @@ const Index = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (name) {
+      const newItem = { id: new Date().getTime().toString(), name };
+      dispatch({ type: 'ADD_ITEM', payload: newItem });
+      setName('');
       // setShowModal(true);
       // setPeople([...people, { id: new Date().getTime().toString, name: name }]);
       // setName('');
     } else {
+      dispatch({ type: 'NO_VALUE' });
       // setShowModal(true);
     }
   };
