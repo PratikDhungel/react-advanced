@@ -13,6 +13,8 @@ const reducer = (state, action) => {
     return { state, people: newPeople, isModalOpen: true, modalContent: 'Item Added' };
   } else if (action.type === 'NO_VALUE') {
     return { ...state, isModalOpen: true, modalContent: 'Please enter a value' };
+  } else if (action.type === 'CLOSE_MODAL') {
+    return { ...state, isModalOpen: false };
   }
 
   throw new Error('Matching Action Type not found');
@@ -45,9 +47,13 @@ const Index = () => {
     }
   };
 
+  const closeModal = () => {
+    dispatch({ type: 'CLOSE_MODAL' });
+  };
+
   return (
     <>
-      {state.isModalOpen && <Modal modalContent={state.modalContent} />}
+      {state.isModalOpen && <Modal closeModal={closeModal} modalContent={state.modalContent} />}
       <form onSubmit={handleSubmit} className='form'>
         <div>
           <input type='text' value={name} onChange={(e) => setName(e.target.value)} />
