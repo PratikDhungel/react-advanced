@@ -1,7 +1,12 @@
 import React, { useState, useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import { data } from '../../../data';
 // more components
 // fix - context api, redux (for more complex cases)
+
+// Get two components - Provider, Consumer
+// Provider works as a distributer
+const PersonContext = React.createContext();
 
 const ContextAPI = () => {
   const [people, setPeople] = useState(data);
@@ -11,34 +16,32 @@ const ContextAPI = () => {
     });
   };
   return (
-    <>
-      <h3>prop drilling</h3>
-      <List people={people} removePerson={removePerson} />
-    </>
+    // Setup the provider in the root component
+    // All components inside it will be able to access it
+    <PersonContext.Provider value={{ removePerson, people }}>
+      <h3>Context API / useContext</h3>
+      <List />
+    </PersonContext.Provider>
   );
 };
 
-const List = ({ people, removePerson }) => {
+const List = () => {
+  const { people } = useContext(PersonContext);
   return (
     <>
       {people.map((person) => {
-        return (
-          <SinglePerson
-            key={person.id}
-            {...person}
-            removePerson={removePerson}
-          />
-        );
+        return <SinglePerson key={person.id} {...person} />;
       })}
     </>
   );
 };
 
-const SinglePerson = ({ id, name, removePerson }) => {
+const SinglePerson = ({ id, name }) => {
+  const { removePerson, people } = useContext(PersonContext);
   return (
     <div className='item'>
       <h4>{name}</h4>
-      <button onClick={() => removePerson(id)}>remove</button>
+      <button onClick={() => removePerson(id)}>Remove</button>
     </div>
   );
 };
