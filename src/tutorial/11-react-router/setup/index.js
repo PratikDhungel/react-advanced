@@ -27,6 +27,8 @@ const ReactRouterSetup = () => {
         <Route path='/people'>
           <People />
         </Route>
+        {/* Open the Person component for this path */}
+        <Route path='/user/:id' children={<Person />}></Route>
         <Route path='*'>
           <Error />
         </Route>
