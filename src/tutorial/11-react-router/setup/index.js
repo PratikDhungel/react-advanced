@@ -12,6 +12,7 @@ import Navbar from './Navbar';
 const ReactRouterSetup = () => {
   return (
     <Router>
+      <Navbar />
       {/* Switch component routes to only the first path that matches */}
       {/* To avoid the problem caused by the '*' path */}
       <Switch>
