@@ -12,16 +12,24 @@ import Navbar from './Navbar';
 const ReactRouterSetup = () => {
   return (
     <Router>
-      // Use exact to not load the Home Page Component // Because the about and people page also have to Home Page path
-      <Route exact path='/'>
-        <Home />
-      </Route>
-      <Route path='/about'>
-        <About />
-      </Route>
-      <Route path='/people'>
-        <People />
-      </Route>
+      {/* Switch component routes to only the first path that matches */}
+      {/* To avoid the problem caused by the '*' path */}
+      <Switch>
+        {/* Use exact to not load the Home Page Component  */}
+        {/* Because the about and people page also have to Home Page path */}
+        <Route exact path='/'>
+          <Home />
+        </Route>
+        <Route path='/about'>
+          <About />
+        </Route>
+        <Route path='/people'>
+          <People />
+        </Route>
+        <Route path='*'>
+          <Error />
+        </Route>
+      </Switch>
     </Router>
   );
 };
